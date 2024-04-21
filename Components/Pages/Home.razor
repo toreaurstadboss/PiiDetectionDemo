@@ -5,6 +5,8 @@
 
 <h3>Azure HealthCare Text Analysis - Pii detection feature - Azure Cognitive Services</h3>
 
+<em>Pii = Person identifiable information</em>
+
 <EditForm Model="@Model" OnValidSubmit="@Submit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -33,7 +35,7 @@
         <div class="progress" style="max-width: 90%">
             <div class="progress-bar progress-bar-striped progress-bar-animated"
                  style="width: 100%; background-color: green">
-                Retrieving result from Azure HealthCare Text Analysis. Processing..
+                Retrieving result from Azure Text Analysis Pii detection feature. Processing..
             </div>
         </div>
         <br />
@@ -51,37 +53,43 @@
             <br />
             <br />
 
+            <b>Redacted text (Pii removed)</b>
+            <br />
+
+            <div class="form-group row">
+                <label><strong>Text input</strong></label>
+                <InputTextArea @oninput="removeWhitespace" class="overflow-scroll" style="max-height:500px;max-width:900px;font-size: 10pt;font-family:Verdana, Geneva, Tahoma, sans-serif" @bind-Value="@Model.RedactedText" rows="5" />
+            </div>
+
+            <br />
+
             <b>Categorized and analyzed Health Analysis of inputted text</b>
             @* @ms *@
             <br />
 
             <table class="table table-striped table-dark table-hover">
-                <th>Category</th>
                 <th>Text</th>
-                <th>Name</th>
-                <th>ConfidenceScore</th>
+                <th>Category</th>
+                <th>SubCategory</th>
                 <th>Offset</th>
                 <th>Length</th>
-                <th>Links</th>
-                @* <tbody>
-                    @foreach (var entity in Model.EntititesInAnalyzedResult)
-                    {
-                        <tr>
-                            <td>@entity.category</td>
-                            <td>@entity.text</td>
-                            <td>@entity.name</td>
-                            <td>@entity.confidenceScore</td>
-                            <td>@entity.offset</td>
-                            <td>@entity.length</td>
-                            <td>@string.Join(Environment.NewLine, (@entity.links ?? new List<Link>()).Select(l => l?.dataSource + " " + l?.id + " | "))</td>
-                        </tr>
-
+                <th>ConfidenceScore</th>
+                <tbody>
+                    @if (Model.AnalysisResult != null) {
+                        @foreach (var entity in Model.AnalysisResult)
+                        {
+                            <tr>
+                                <td>@entity.Text</td>
+                                <td>@entity.Category.ToString()</td>
+                                <td>@entity.SubCategory</td>
+                                <td>@entity.Offset</td>
+                                <td>@entity.Length</td>
+                                <td>@entity.ConfidenceScore</td>                                        
+                            </tr>
+                        }
                     }
-                </tbody> *@
+                </tbody>
             </table>
-
-            <b>Health Analysis raw text from Azure service</b>
-            <InputTextArea class="overflow-scroll" readonly="readonly" style="max-height:500px; max-width:900px;font-size: 10pt;font-family:Verdana, Geneva, Tahoma, sans-serif" @bind-Value="@Model.AnalysisResult" rows="1000" />
 
         }
     </div>

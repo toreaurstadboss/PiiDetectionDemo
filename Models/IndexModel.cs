@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Azure.AI.TextAnalytics;
+using System.ComponentModel.DataAnnotations;
 
 namespace PiiDetectionDemo.Models
 {
@@ -8,10 +9,12 @@ namespace PiiDetectionDemo.Models
 
         [Required]
         public string? InputText { get; set; }
+
+        public string? RedactedText { get; set; }
       
         public long ExecutionTime { get; set; }
 
-        public string? AnalysisResult { get; set; }
+        public PiiEntityCollection? AnalysisResult { get; set; }
 
     }
 }

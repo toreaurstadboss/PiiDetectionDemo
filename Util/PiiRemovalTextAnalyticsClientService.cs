@@ -25,7 +25,7 @@ namespace PiiDetectionDemo.Util
             _client = new TextAnalyticsClient(new Uri(azureEndpoint), new AzureKeyCredential(azureKey));
         }
 
-        public async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = "no")
+        public async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string? document, string? language)
         {
             var piiEntities = await _client.RecognizePiiEntitiesAsync(document, language);
             return piiEntities;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Azure;
+using Microsoft.AspNetCore.Components;
 using PiiDetectionDemo.Models;
 using PiiDetectionDemo.Util;
 using System;
@@ -18,11 +19,20 @@ namespace PiiDetectionDemo.Components.Pages
 
         private async Task Submit()
         {
-            //__piiRemovalTextAnalyticsClientService.
-
-
-
-
+            isSearchPerformed = false;
+            isProcessing = true;
+            try
+            {
+                var response = await _piiRemovalTextAnalyticsClientService.RecognizePiiEntitiesAsync(Model.InputText, null);
+                Model.RedactedText = response?.Value?.RedactedText;
+                Model.AnalysisResult = response?.Value;
+            }
+            catch (Exception ex)
+            {
+                await Console.Out.WriteLineAsync(ex.ToString());
+            }
+            isProcessing = false;
+            isSearchPerformed = true;
         }
 
         private void removeWhitespace(ChangeEventArgs args)
