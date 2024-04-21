@@ -25,7 +25,9 @@ namespace PiiDetectionDemo.Components.Pages
             {
                 var response = await _piiRemovalTextAnalyticsClientService.RecognizePiiEntitiesAsync(Model.InputText, null);
                 Model.RedactedText = response?.Value?.RedactedText;
+                Model.UpdateHtmlRedactedText();
                 Model.AnalysisResult = response?.Value;
+                StateHasChanged();
             }
             catch (Exception ex)
             {

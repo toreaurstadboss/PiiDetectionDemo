@@ -57,23 +57,24 @@
             <br />
 
             <div class="form-group row">
-                <label><strong>Text input</strong></label>
-                <InputTextArea @oninput="removeWhitespace" class="overflow-scroll" style="max-height:500px;max-width:900px;font-size: 10pt;font-family:Verdana, Geneva, Tahoma, sans-serif" @bind-Value="@Model.RedactedText" rows="5" />
+               <label><strong>Categorized Pii redacted text</strong></label>
+               <div>
+               @Model.HtmlRedactedTextMarkupString
+               </div>
             </div>
 
             <br />
-
-            <b>Categorized and analyzed Health Analysis of inputted text</b>
-            @* @ms *@
             <br />
 
             <table class="table table-striped table-dark table-hover">
-                <th>Text</th>
+                <thead>
+                <th>Pii text</th>
                 <th>Category</th>
                 <th>SubCategory</th>
                 <th>Offset</th>
                 <th>Length</th>
                 <th>ConfidenceScore</th>
+                </thead>
                 <tbody>
                     @if (Model.AnalysisResult != null) {
                         @foreach (var entity in Model.AnalysisResult)
