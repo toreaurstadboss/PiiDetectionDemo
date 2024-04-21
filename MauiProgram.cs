@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PiiDetectionDemo.Util;
 
 namespace PiiDetectionDemo
 {
@@ -15,6 +16,8 @@ namespace PiiDetectionDemo
                 });
 
             builder.Services.AddMauiBlazorWebView();
+
+            builder.Services.AddScoped<IPiiRemovalTextAnalyticsClientService, PiiRemovalTextAnalyticsClientService>();
 
 #if DEBUG
     		builder.Services.AddBlazorWebViewDeveloperTools();
